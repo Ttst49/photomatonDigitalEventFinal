@@ -1,6 +1,6 @@
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 const baseUrl = "https://www.ascii-art.fr/"
-const randomString = ""
+
 
 
 function takePicture() {
@@ -235,9 +235,55 @@ function takePicture() {
 
 }
 
-function makeImgFromCanvas(canva){
+function generateString(length) {
+    let randomString = ' ';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        randomString += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
 
+    return randomString;
+}
+
+function makeImgFromCanvas(){
+    let randomString = generateString(10)
+    html2canvas(document.querySelector("#capture")).then(canvas => {
+        document.body.appendChild(canvas)
+        canvas.toBlob(function (blob){
+            saveAs(blob, randomString)
+        })
+        return randomString
+    });
+}
+
+function getQrcode(baseUrl, randomString){
+    let qrcode = new QRCode(document.querySelector('.forQrCode'), {
+        text: `${baseUrl}${randomString}`,
+        width: 75,
+        height: 75,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+}
+
+function createTemplate(templateBase,baseUrl, randomString,img){
+    let qrcode = getQrcode(baseUrl, randomString)
+    let templateFinished;
+    templateFinished = templateBase + qrcode + img;
+    return templateFinished
+}
+
+function pdfToPrint(templateFinished) {
+    printContents = templateFinished
+    originalContents = document.body.innerHTML;
+
+    document.body.appendChild(printContents);
+    window.print();
+    document.body.innerHTML = originalContents;
 }
 
 
+function pdfToServer(templateFinished,randomString){
 
+}
