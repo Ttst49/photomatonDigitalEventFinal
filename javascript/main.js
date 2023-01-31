@@ -23,7 +23,7 @@ const templateCreation= `<div class="fadeIn">
 </div>`
 
 
-
+let templateFinal = ""
 const width = 700;
 let height = 0;
 let streaming = false;
@@ -221,8 +221,7 @@ function makeImgFromCanvas(){
 }
 
 
-function DownloadCanvasAsImage(){
-    let newRandomString = generateString(10)
+function DownloadCanvasAsImage(randomString){
     let downloadLink = document.createElement('a');
     downloadLink.setAttribute('download', randomString+'.png');
     let canvas = document.getElementById('canvas1');
@@ -231,9 +230,8 @@ function DownloadCanvasAsImage(){
     downloadLink.setAttribute('href',url);
     downloadLink.click();
 
-    randomString = newRandomString
     picture= downloadLink
-    return randomString
+
 }
 
 
@@ -249,33 +247,38 @@ function getQrcode(baseUrl){
 }
 
 
-function createTemplate(baseUrl){
-    let randomString = DownloadCanvasAsImage()
+function getEverythingNeeded(){
+    generateString(10)
+    DownloadCanvasAsImage(randomString)
+}
+
+async function createTemplate(baseUrl) {
     let template=`<div class="container row">
         <div class="mainDiv">
-            <div class="forImage">
-                <img id="pic" src="../img/${randomString}.png" alt="picture">
-            </div>
+        <div class="forpic">
+             <img id="pic" src="../img/${randomString}.png" alt="picture">
+        </div>
             <div class="forQrCode">
             </div>
         </div>
     </div>`
     contenuPage.innerHTML= template
 
+    getQrcode(baseUrl, randomString)
 
-    getQrcode(baseUrl,randomString)
-
-
-    return template
+    templateFinal = template
 }
 
-function print(template) {
-    printContents = templateFinished
-    originalContents = document.body.innerHTML;
+function print() {
+    const backgroundImg = document.querySelector(".row")
 
-    document.body.appendChild(printContents);
-    window.print();
-    document.body.innerHTML = originalContents;
+    backgroundImg.classList+="AllWhite"
+    //printContents = templateFinal
+    //originalContents = document.body.innerHTML;
+
+    //document.body.appendChild(printContents);
+    //window.print();
+    //document.body.innerHTML = originalContents;
 }
 
 function pdfToServer(template,randomString){

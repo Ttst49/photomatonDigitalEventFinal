@@ -1,3 +1,7 @@
+.rowAllWhite{
+    background-image: url("imgTransparent.png");
+}
+
 body{
     background-color: black;
     display: flex;
@@ -63,15 +67,17 @@ body{
 .mainDiv {
     width: 740px;
     height: 1024px;
-    background-image: url("./img.jpg");
-    background-repeat: no-repeat;
+
 }
 .row{
     display: flex;
     align-items: center;
     justify-content: center;
+    background-image: url("./img.png");
+    background-repeat: no-repeat;
 }
 .forImage{
+    z-index: 0;
     position: relative;
     top: 40px;
     left: 28px;
@@ -82,6 +88,15 @@ body{
     align-items: center;
     justify-content: center;
 }
+#pic{
+    z-index: -5;
+    position: relative;
+    width: 966px;
+    height: 774px;
+    right: 174px;
+    clip-path: inset(42px 155px 0px 190px);
+}
+
 .image{
     position: relative;
     height: 730px;
@@ -93,10 +108,10 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80px;
-    width: 80px;
+    height: 50px;
+    width: 50px;
     top: 110px;
-    left: 550px;
+    left: 537px;
 }
 
 /* Animation waiting Template*/
@@ -191,12 +206,4 @@ body{
     100%{
         opacity: 1;
     }
-}
-
-#pic{
-    position: absolute;
-    top: 40px;
-    right: 364px;
-    width: 621px;
-    height: 733px;
 }
