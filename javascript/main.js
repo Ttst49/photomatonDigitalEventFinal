@@ -22,6 +22,8 @@ const templateCreation= `<div class="fadeIn">
     <span class="createTexttake">création</span>
 </div>`
 
+
+
 const width = 700;
 let height = 0;
 let streaming = false;
@@ -29,9 +31,9 @@ let video = null;
 let canvas = null;
 let photo = null;
 let startbutton = null;
-
 let randomString=""
 let picture = ""
+
 
 window.addEventListener("load", startup, false);
 
@@ -208,7 +210,7 @@ function makeImgFromCanvas(){
     let newRandomString = generateString(10)
     html2canvas(document.querySelector("#canvas1")).then(canvas => {
         canvas.toBlob(function (newPicture){
-            //saveAs(blob, newRandomString)
+            saveAs(blob, newRandomString)
 
             randomString = newRandomString
             picture = newPicture
@@ -217,6 +219,23 @@ function makeImgFromCanvas(){
 
     });
 }
+
+
+function DownloadCanvasAsImage(){
+    let newRandomString = generateString(10)
+    let downloadLink = document.createElement('a');
+    downloadLink.setAttribute('download', randomString+'.png');
+    let canvas = document.getElementById('canvas1');
+    let dataURL = canvas.toDataURL('image/png');
+    let url = dataURL.replace(/^data:image\/png/,'data:application/octet-stream');
+    downloadLink.setAttribute('href',url);
+    downloadLink.click();
+
+    randomString = newRandomString
+    picture= downloadLink
+    return randomString
+}
+
 
 function getQrcode(baseUrl){
     let qrcode = new QRCode(document.querySelector('.forQrCode'), {
@@ -229,19 +248,21 @@ function getQrcode(baseUrl){
     });
 }
 
-function createTemplate(baseUrl,picture){
-    let randomString = makeImgFromCanvas()
+
+function createTemplate(baseUrl){
+    let randomString = DownloadCanvasAsImage()
     let template=`<div class="container row">
         <div class="mainDiv">
             <div class="forImage">
-                <img class="image" src="${URL.createObjectURL(picture)}" alt="img">
+                <img id="pic" src="../img/${randomString}.png" alt="picture">
             </div>
             <div class="forQrCode">
             </div>
         </div>
     </div>`
-
     contenuPage.innerHTML= template
+
+
     getQrcode(baseUrl,randomString)
 
 

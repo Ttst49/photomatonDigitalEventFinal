@@ -192,3 +192,11 @@ body{
         opacity: 1;
     }
 }
+
+#pic{
+    position: absolute;
+    top: 40px;
+    right: 364px;
+    width: 621px;
+    height: 733px;
+}
