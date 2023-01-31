@@ -205,22 +205,6 @@ function generateString(length) {
     randomString = newRandomString
 }
 
-function makeImgFromCanvas(){
-    //contenuPage.innerHTML = templateWaiting
-    let newRandomString = generateString(10)
-    html2canvas(document.querySelector("#canvas1")).then(canvas => {
-        canvas.toBlob(function (newPicture){
-            saveAs(blob, newRandomString)
-
-            randomString = newRandomString
-            picture = newPicture
-            return randomString
-        })
-
-    });
-}
-
-
 function DownloadCanvasAsImage(randomString){
     let downloadLink = document.createElement('a');
     downloadLink.setAttribute('download', randomString+'.png');
@@ -233,7 +217,6 @@ function DownloadCanvasAsImage(randomString){
     picture= downloadLink
 
 }
-
 
 function getQrcode(baseUrl){
     let qrcode = new QRCode(document.querySelector('.forQrCode'), {
