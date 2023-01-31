@@ -252,7 +252,7 @@ function getEverythingNeeded(){
     DownloadCanvasAsImage(randomString)
 }
 
-async function createTemplate(baseUrl) {
+async function createTemplate() {
     let template=`<div class="container row">
         <div class="mainDiv">
         <div class="forpic">
@@ -273,14 +273,15 @@ function print() {
     const backgroundImg = document.querySelector(".row")
 
     backgroundImg.classList+="AllWhite"
-    //printContents = templateFinal
-    //originalContents = document.body.innerHTML;
+    printContents = templateFinal
+    originalContents = document.body.innerHTML;
 
-    //document.body.appendChild(printContents);
-    //window.print();
-    //document.body.innerHTML = originalContents;
+    document.body.appendChild(printContents);
+    window.print();
+    document.body.innerHTML = originalContents;
 }
 
 function pdfToServer(template,randomString){
 
 }
+
