@@ -250,8 +250,8 @@ function DownloadCanvasAsImage(randomString){
 function getQrcode(baseUrl){
     let qrcode = new QRCode(document.querySelector('.forQrCode'), {
         text: `${baseUrl}${randomString}`,
-        width: 40,
-        height: 40,
+        width: 60,
+        height: 60,
         colorDark : "#000000",
         colorLight : "#ffffff",
         correctLevel : QRCode.CorrectLevel.H,
