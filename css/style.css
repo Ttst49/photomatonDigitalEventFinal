@@ -31,9 +31,6 @@ body{
     height: 640px;
 }
 
-#canvas {
-    display: none;
-}
 
 .camera {
     width: 340px;
@@ -212,4 +209,8 @@ body{
     100%{
         opacity: 1;
     }
+}
+
+@page {
+    size: A5;
 }

@@ -50,11 +50,13 @@ function logKey(e) {
             temoin="capture"
             commencer.textContent="entrée = imprimer || effacer = recommencer"
             contenuPage.toggleAttribute("faireDisparaitre")
-            getEverythingNeeded()
+            getEverythingNeeded().then(r =>getQrcode(baseUrl) )
+
+
         }
         else if(temoin==="capture"){
-            commencer.classList.toggle('faireDisparaitre')
-            createTemplate().then(r => printWindow())
+            generatePDF(randomString).then(r => printWindow()).then(window.reload)
+
         }
     }
 
@@ -248,16 +250,17 @@ function DownloadCanvasAsImage(randomString){
 function getQrcode(baseUrl){
     let qrcode = new QRCode(document.querySelector('.forQrCode'), {
         text: `${baseUrl}${randomString}`,
-        width: 90,
-        height: 90,
+        width: 40,
+        height: 40,
         colorDark : "#000000",
         colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
+        correctLevel : QRCode.CorrectLevel.H,
+        classList: "qrCode"
     });
 }
 
 
-function getEverythingNeeded(){
+async function getEverythingNeeded(){
     generateString(10)
     DownloadCanvasAsImage(randomString)
 }
@@ -297,6 +300,20 @@ function print() {
     document.body.innerHTML = originalContents;
 }
 */
+
+async function generatePDF(fileName){
+
+    let opt = {
+        filename:     fileName +".pdf",
+        image:        { type: 'png' },
+        html2canvas:  { scale: 1},
+        jsPDF:        { unit: 'cm', format: 'a6', orientation: 'portrait'}
+    };
+
+    const conteneur = document.querySelector(".row")
+
+    html2pdf().from(conteneur).set(opt).save()
+}
 
 function pdfToServer(template,randomString){
 
