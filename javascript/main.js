@@ -143,7 +143,7 @@ function takepicture() {
             this.symbol = symbol;
         }
         draw(ctx){
-            ctx.fillStyle = 'black';
+            ctx.fillStyle = 'white';
             ctx.fillText(this.symbol, this.x, this.y)
         }
     }
