@@ -1,5 +1,5 @@
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-const baseUrl = "https://www.ascii-art.fr/"
+const baseUrl = "https://ascii-art.fr/"
 const contenuPage = document.querySelector(".content")
 const ancienContenu = document.querySelector('.row')
 const templatePhoto = `
@@ -55,7 +55,7 @@ function logKey(e) {
 
         }
         else if(temoin==="capture"){
-            generatePDF(randomString).then(r => printWindow()).then(window.reload)
+            generatePDF(randomString).then(r => printWindow()).then(location.reload())
 
         }
     }
@@ -143,7 +143,7 @@ function takepicture() {
             this.symbol = symbol;
         }
         draw(ctx){
-            ctx.fillStyle = 'white';
+            ctx.fillStyle = 'black';
             ctx.fillText(this.symbol, this.x, this.y)
         }
     }
@@ -304,6 +304,7 @@ function print() {
 async function generatePDF(fileName){
 
     let opt = {
+        destination: "../pdf/",
         filename:     fileName +".pdf",
         image:        { type: 'png' },
         html2canvas:  { scale: 1},
