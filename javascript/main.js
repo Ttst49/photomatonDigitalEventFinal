@@ -1,20 +1,9 @@
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 const baseUrl = "https://www.ascii-art.fr/"
 const contenuPage = document.querySelector(".content")
-const templatePhoto = `<div class="container ">
-    <div class="contentarea">
-        <div class="camera">
-            <video id="video">Le flux vidéo n'est pas disponible.</video>
-            <button id="startbutton">Prendre une photo</button>
-        </div>
-        <canvas id="canvas"> </canvas>
-        <div class="output">
-            <canvas id="canvas1" class="gris"> </canvas>
-            <img id="capture" class="none" alt="L'image capturée apparaîtra ici.">
-        </div>
-    </div>
-
-</div>`
+const ancienContenu = document.querySelector('.row')
+const templatePhoto = `
+`
 const templateWaiting= `<div class="load">
     
 </div>`
@@ -24,7 +13,7 @@ const templateCreation= `<div class="fadeIn">
 
 
 let templateFinal = ""
-const width = 700;
+const width = 499;
 let height = 0;
 let streaming = false;
 let video = null;
@@ -33,6 +22,44 @@ let photo = null;
 let startbutton = null;
 let randomString=""
 let picture = ""
+//_____________________________________________
+
+let commencer = document.querySelector('.commencer')
+let image = document.querySelector('.photo')
+let temoin = ""
+
+addEventListener('keydown', logKey);
+
+function logKey(e) {
+    if (e.code === 'Backspace') {
+        if(temoin==="capture"){
+            location.reload();
+        }
+    }
+    if (e.code === 'Enter') {
+        if (temoin ==="") {
+            image.classList.toggle('faireDisparaitre')
+            commencer.textContent="tape sur entrée capturer la photo"
+            video.classList.toggle('faireDisparaitre')
+            interval = setInterval(takepicture, 0.1)
+
+            temoin = "video";
+        }
+        else if (temoin==="video"){
+            clearInterval(interval)
+            temoin="capture"
+            commencer.textContent="entrée = imprimer || effacer = recommencer"
+            contenuPage.toggleAttribute("faireDisparaitre")
+            getEverythingNeeded()
+        }
+        else if(temoin==="capture"){
+            commencer.classList.toggle('faireDisparaitre')
+            createTemplate().then(r => printWindow())
+        }
+    }
+
+}
+//-------------------------------------------------
 
 
 window.addEventListener("load", startup, false);
@@ -236,6 +263,7 @@ function getEverythingNeeded(){
 }
 
 async function createTemplate() {
+    ancienContenu.toggleAttribute("faireDisparaitre")
     let template=`<div class="container row">
         <div class="mainDiv">
         <div class="forpic">
@@ -252,6 +280,11 @@ async function createTemplate() {
     templateFinal = template
 }
 
+function printWindow(){
+    window.print()
+}
+
+/*
 function print() {
     const backgroundImg = document.querySelector(".row")
 
@@ -263,6 +296,7 @@ function print() {
     window.print();
     document.body.innerHTML = originalContents;
 }
+*/
 
 function pdfToServer(template,randomString){
 

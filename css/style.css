@@ -1,9 +1,11 @@
 .rowAllWhite{
     background-image: url("imgTransparent.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 body{
-    background-color: black;
+    background-color: #252525;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -59,9 +61,13 @@ body{
 }
 
 .contentarea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: 16px;
     font-family: "Lucida Grande", "Arial", sans-serif;
-    width: 760px;
+    width: 1500px;
 }
 
 .mainDiv {
