@@ -2,14 +2,19 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
 const baseUrl = "https://ascii-art.fr/"
 const contenuPage = document.querySelector(".content")
 const ancienContenu = document.querySelector('.row')
-const templatePhoto = `
-`
-const templateWaiting= `<div class="load">
-    
-</div>`
-const templateCreation= `<div class="fadeIn">
-    <span class="createTexttake">création</span>
-</div>`
+const templatePhoto = ``
+const templateWaiting= `<div class="load"></div>`
+const templateCreation= `
+                         <div class="fadeIn">
+                         <span class="createTexttake">création</span>
+                         </div>
+                        `
+const qrCodePlace = document.querySelector(".forQrCode")
+
+const chiffre1 = document.querySelector('#chiffre1')
+const chiffre2 = document.querySelector('#chiffre2')
+const chiffre3 = document.querySelector('#chiffre3')
+
 
 
 let templateFinal = ""
@@ -27,7 +32,7 @@ let picture = ""
 let commencer = document.querySelector('.commencer')
 let image = document.querySelector('.photo')
 let temoin = ""
-
+/*
 addEventListener('keydown', logKey);
 
 function logKey(e) {
@@ -42,7 +47,6 @@ function logKey(e) {
             commencer.textContent="tape sur entrée capturer la photo"
             //video.classList.toggle('faireDisparaitre')
             interval = setInterval(takepicture, 0.01)
-
             temoin = "video";
         }
         else if (temoin==="video"){
@@ -50,21 +54,87 @@ function logKey(e) {
             temoin="capture"
             contenuPage.toggleAttribute("faireDisparaitre")
             getEverythingNeeded().then(r =>getQrcode(baseUrl) )
-
-
         }
         else if(temoin==="capture"){
             pdfToServeurGet(randomString)
             generatePDF(randomString).then(r => printWindow()).then(location.reload())
-
         }
     }
-
 }
+*/
+
 //-------------------------------------------------
 
 
+
 window.addEventListener("load", startup, false);
+window.addEventListener('keypress', (event)=>{
+    if (event.key == " "){
+        photomathon()
+        console.log('script à lancé')
+    }
+})
+
+interval = setInterval(takepicture, 0.01)
+
+// code display screen compte à rebours
+async function photomathon(){
+    await compteARebours()
+    // puis appelle lancement du code dans le setTimeOut Promise
+}
+function decompte(i){
+    setTimeout( function ()
+    {
+        if(i==1){
+            chiffre1.classList.add("displayBlock")
+        }
+        if(i==2){
+            chiffre1.classList.remove("displayBlock")
+            chiffre2.classList.add("displayBlock")
+        }
+        if(i==3){
+            chiffre2.classList.remove("displayBlock")
+            chiffre3.classList.add("displayBlock")
+        }
+        if(i==4){
+            chiffre3.classList.remove("displayBlock")
+            document.body.style.backgroundColor = 'white'
+        }
+        if(i==5){
+            document.body.style.backgroundColor = 'grey'
+        }
+        console.log(i)
+    },900*i)
+}
+async function compteARebours(){
+    for (let i = 1; i <= 5; i++) {
+        decompte(i)
+    }
+
+    return new Promise(resolve => {
+        setTimeout(() => {
+
+            // appelle de la function que l'on veut
+            clearInterval(interval) // arrêt du live ascii pour prendre photo
+
+            // script photo
+            contenuPage.toggleAttribute("faireDisparaitre")
+            getEverythingNeeded().then(r =>getQrcode(baseUrl) )
+
+            //console.log(randomString)
+            pdfToServeurGet(randomString)
+            generatePDF(randomString).then(r => printWindow()).then(location.reload())
+            setTimeout(qrCodePlace.innerHTML = "",7000)
+
+
+            interval = setInterval(takepicture, 0.01)
+
+
+
+        }, 4500);
+
+    });
+}
 
 
 function startup() {
@@ -316,9 +386,11 @@ async function generatePDF(fileName){
     html2pdf().from(conteneur).set(opt).save()
 }
 
+
 async function pdfToServeurGet(randomString){
 
-    let url = `${baseURL}${randomString}`
+    //console.log(randomString)
+    let url = `${baseUrl}${randomString}`
 
     let requestOptions = {
         method: 'GET',
