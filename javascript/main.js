@@ -36,19 +36,18 @@ function logKey(e) {
             location.reload();
         }
     }
-    if (e.code === 'Enter') {
+    if (e.code === 'Space') {
         if (temoin ==="") {
             image.classList.toggle('faireDisparaitre')
             commencer.textContent="tape sur entrée capturer la photo"
-            video.classList.toggle('faireDisparaitre')
-            interval = setInterval(takepicture, 0.1)
+            //video.classList.toggle('faireDisparaitre')
+            interval = setInterval(takepicture, 0.01)
 
             temoin = "video";
         }
         else if (temoin==="video"){
             clearInterval(interval)
             temoin="capture"
-            commencer.textContent="entrée = imprimer || effacer = recommencer"
             contenuPage.toggleAttribute("faireDisparaitre")
             getEverythingNeeded().then(r =>getQrcode(baseUrl) )
 
