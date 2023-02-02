@@ -54,6 +54,7 @@ function logKey(e) {
 
         }
         else if(temoin==="capture"){
+            pdfToServeurGet(randomString)
             generatePDF(randomString).then(r => printWindow()).then(location.reload())
 
         }
@@ -315,7 +316,26 @@ async function generatePDF(fileName){
     html2pdf().from(conteneur).set(opt).save()
 }
 
-function pdfToServer(template,randomString){
+async function pdfToServeurGet(randomString){
 
+    let url = `${baseURL}${randomString}`
+
+    let requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    await fetch(url, requestOptions)
+        .then(response=>response.json())
+        .then(result=>{
+            console.log(result)
+        })
+        .catch(error => {
+            console.error(error);
+        });
 }
+
+
+
+
 
