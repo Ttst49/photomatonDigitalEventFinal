@@ -117,6 +117,7 @@ async function compteARebours(){
             // appelle de la function que l'on veut
             clearInterval(interval) // arrêt du live ascii pour prendre photo
 
+
             // script photo
             contenuPage.toggleAttribute("faireDisparaitre")
             getEverythingNeeded().then(r =>getQrcode(baseUrl) )
