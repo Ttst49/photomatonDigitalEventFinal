@@ -394,8 +394,7 @@ async function pdfToServeurGet(randomString){
     let url = `${baseUrl}${randomString}`
 
     let requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
+        method: 'GET'
     };
 
     await fetch(url, requestOptions)
