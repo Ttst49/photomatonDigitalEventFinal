@@ -71,6 +71,7 @@ window.addEventListener("load", startup, false);
 window.addEventListener('keypress', (event)=>{
     if (event.key == " "){
         photomathon()
+        event.key = null
         console.log('script à lancé')
     }
 })
